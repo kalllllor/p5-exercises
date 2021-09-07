@@ -1,24 +1,23 @@
-let video;
-let vScale = 2;
-let particles = [];
-
 function setup() {
-  createCanvas(640, 480);
-  pixelDensity(1);
-  video = createCapture(VIDEO);
-  video.size(width, height);
-
-  for (let i = 0; i < 10; i++) {
-    particles.push(
-      new Particle(random(width), random(height))
-    );
-  }
+  createCanvas(480, 480);
 }
+let inc = 0.01;
+let start = 0;
 
 function draw() {
-  video.loadPixels();
-  for (let i = 0; i < particles.length; i++) {
-    particles[i].update();
-    particles[i].show();
+  background(51);
+  stroke(241);
+  noFill();
+  beginShape();
+  xoff = start;
+  for (let i = 0; i < width; i++) {
+    stroke(241);
+    let y =
+      noise(xoff) * height +
+      (sin(xoff) * height) / 4;
+    vertex(i, y);
+    xoff += 0.01;
   }
+  start += 0.02;
+  endShape();
 }
