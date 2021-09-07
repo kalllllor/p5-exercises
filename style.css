@@ -3,11 +3,8 @@ body {
   margin: 0;
   padding: 0;
   display: flex;
-}
-
-video {
-  width: 200px;
-  height: 200px;
+  flex-direction: column;
+  justify-content: flex-start;
 }
 
 canvas {
