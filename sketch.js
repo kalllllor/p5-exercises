@@ -1,23 +1,36 @@
+const simplex = new SimplexNoise();
+
 function setup() {
   createCanvas(480, 480);
+  pixelDensity(1);
 }
-let inc = 0.01;
-let start = 0;
 
+let inc = 0.005;
+let start = 0;
+let zoff = 0.01;
 function draw() {
-  background(51);
-  stroke(241);
-  noFill();
-  beginShape();
-  xoff = start;
-  for (let i = 0; i < width; i++) {
-    stroke(241);
-    let y =
-      noise(xoff) * height +
-      (sin(xoff) * height) / 4;
-    vertex(i, y);
-    xoff += 0.01;
+  loadPixels();
+  zoff = start;
+  let xoff = 0;
+  for (let x = 0; x < width; x++) {
+    xoff += inc;
+    let yoff = 0;
+    for (let y = 0; y < height; y++) {
+      yoff += inc;
+      let index = (x + y * width) * 4;
+      let r = map(
+        simplex.noise3D(xoff, yoff, zoff),
+        0,
+        1,
+        0,
+        255
+      );
+      pixels[index + 0] = r;
+      pixels[index + 1] = r;
+      pixels[index + 2] = r;
+      pixels[index + 3] = 255;
+    }
   }
-  start += 0.02;
-  endShape();
+  start += 0.005;
+  updatePixels();
 }
